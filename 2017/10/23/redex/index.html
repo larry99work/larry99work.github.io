@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="Redex 简介最近 Facebook 开源了一个名为 Redex 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。
-Redex 的集成和使用在使用 Redex 之前，首">
+<meta name="description" content="Redex 简介最近 Facebook 开源了一个名为 Redex1 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。
+Redex 的集成和使用在使用 Redex 之前，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redex 的集成和使用">
 <meta property="og:url" content="https://github.com/larry99work/larry99work.github.io/2017/10/23/redex/index.html">
 <meta property="og:site_name" content="波光里的椰子树">
-<meta property="og:description" content="Redex 简介最近 Facebook 开源了一个名为 Redex 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。
-Redex 的集成和使用在使用 Redex 之前，首">
-<meta property="og:updated_time" content="2017-10-23T07:18:23.000Z">
+<meta property="og:description" content="Redex 简介最近 Facebook 开源了一个名为 Redex1 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。
+Redex 的集成和使用在使用 Redex 之前，">
+<meta property="og:updated_time" content="2017-10-24T02:20:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redex 的集成和使用">
-<meta name="twitter:description" content="Redex 简介最近 Facebook 开源了一个名为 Redex 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。
-Redex 的集成和使用在使用 Redex 之前，首">
+<meta name="twitter:description" content="Redex 简介最近 Facebook 开源了一个名为 Redex1 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。
+Redex 的集成和使用在使用 Redex 之前，">
 
 
 
@@ -341,12 +341,12 @@ Redex 的集成和使用在使用 Redex 之前，首">
       
 
       
-        <h3 id="Redex-简介"><a href="#Redex-简介" class="headerlink" title="Redex 简介"></a>Redex 简介</h3><p>最近 Facebook 开源了一个名为 Redex 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。</p>
+        <h3 id="Redex-简介"><a href="#Redex-简介" class="headerlink" title="Redex 简介"></a>Redex 简介</h3><p>最近 Facebook 开源了一个名为 Redex<a href="https://github.com/facebook/redex">1</a> 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。</p>
 <h3 id="Redex-的集成和使用"><a href="#Redex-的集成和使用" class="headerlink" title="Redex 的集成和使用"></a>Redex 的集成和使用</h3><p>在使用 Redex 之前，首先要配置好编译环境，Redex 目前支持 Mac OSX 和 Linux 系统，Windows 同学请掩泪飘过～，下面以 Mac OSX 为例说明。</p>
 <h4 id="1、依赖的安装"><a href="#1、依赖的安装" class="headerlink" title="1、依赖的安装"></a>1、依赖的安装</h4><p>打开 Terminal 窗口，执行以下的 HomeBrew 命令安装 Redex 的依赖：</p>
 <pre><code>brew install autoconf automake libtool python3
 brew install boost double-conversion gflags glog libevent
-</code></pre><h4 id="2、下载，构建和安装"><a href="#2、下载，构建和安装" class="headerlink" title="2、下载，构建和安装"></a>2、下载，构建和安装</h4><p>Redex 的依赖成功安装后，接着使用 Git 将 Redex 的源码 checkout 到电脑上，由于 Redex 是以子模块的方式引入 folly[3] 的，因此需要执行如下命令初始化子模块：</p>
+</code></pre><h4 id="2、下载，构建和安装"><a href="#2、下载，构建和安装" class="headerlink" title="2、下载，构建和安装"></a>2、下载，构建和安装</h4><p>Redex 的依赖成功安装后，接着使用 Git 将 Redex 的源码 checkout 到电脑上，由于 Redex 是以子模块的方式引入 folly<a href="https://github.com/facebook/folly">3</a> 的，因此需要执行如下命令初始化子模块：</p>
 <pre><code>git submodule update --init
 </code></pre><p>最后，通过 autoreconf 和 make 命令来编译 Redex：</p>
 <pre><code>autoreconf -ivf &amp;&amp; ./configure &amp;&amp; make &amp;&amp; make install
@@ -389,6 +389,10 @@ brew install boost double-conversion gflags glog libevent
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/03/private-maven/" rel="prev" title="搭建私有 Maven 仓库">
+                搭建私有 Maven 仓库 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -460,7 +464,7 @@ brew install boost double-conversion gflags glog libevent
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

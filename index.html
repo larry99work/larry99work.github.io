@@ -259,6 +259,172 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://github.com/larry99work/larry99work.github.io/2017/11/03/private-maven/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="larry">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="波光里的椰子树">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="波光里的椰子树" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/03/private-maven/" itemprop="url">
+                  搭建私有 Maven 仓库
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-03T18:46:17+08:00">
+                2017-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/11/03/private-maven/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/03/private-maven/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://blog.csdn.net/kennethyo/article/details/52401963" target="_blank" rel="external"><font size="3">原文链接（有改动）</font></a></p>
+<h3 id="一、安装-Docker-并运行-Nexus"><a href="#一、安装-Docker-并运行-Nexus" class="headerlink" title="一、安装 Docker 并运行 Nexus"></a>一、安装 Docker 并运行 Nexus</h3><h4 id="1、下载-并安装-Docker，传送门"><a href="#1、下载-并安装-Docker，传送门" class="headerlink" title="1、下载 并安装 Docker，传送门"></a>1、下载 并安装 Docker，<a href="https://www.docker.com/community-edition#/download" target="_blank" rel="external"><font color="#2196F3">传送门</font></a></h4><h4 id="2、在-Terminal-中输入-docker-v，如果显示版本号，说明安装后环境是没有问题的，如下是我显示的版本号："><a href="#2、在-Terminal-中输入-docker-v，如果显示版本号，说明安装后环境是没有问题的，如下是我显示的版本号：" class="headerlink" title="2、在 Terminal 中输入 docker -v，如果显示版本号，说明安装后环境是没有问题的，如下是我显示的版本号："></a>2、在 Terminal 中输入 docker -v，如果显示版本号，说明安装后环境是没有问题的，如下是我显示的版本号：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ Docker version 17.09.0-ce, build afdb6d4</div></pre></td></tr></table></figure>
+<h4 id="3、在-Terminal-输入-docker-pull-sonatype-nexus-进行下载-nexus-镜像。"><a href="#3、在-Terminal-输入-docker-pull-sonatype-nexus-进行下载-nexus-镜像。" class="headerlink" title="3、在 Terminal 输入 docker pull sonatype/nexus 进行下载 nexus 镜像。"></a>3、在 Terminal 输入 docker pull sonatype/nexus 进行下载 nexus 镜像。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker pull sonatype/nexus</div></pre></td></tr></table></figure>
+<p>下载过程中，会显示下载进度。如果比较慢或者超时，请在 Docker 里设置 mirror。</p>
+<p>灵雀加速：<a href="http://houchaohann.m.alauda.cn" target="_blank" rel="external">http://houchaohann.m.alauda.cn</a></p>
+<p>阿里云加速：<a href="https://3wky8dz8.mirror.aliyuncs.com" target="_blank" rel="external">https://3wky8dz8.mirror.aliyuncs.com</a></p>
+<p>下载成功后显示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">localhost:~ mac$ docker pull sonatype/nexus</div><div class="line">Using default tag: latest</div><div class="line">latest: Pulling from sonatype/nexus</div><div class="line">7b6bb4652a1b: Pull complete </div><div class="line">f295684138f4: Pull complete </div><div class="line">0683ddb8f6b3: Pull complete </div><div class="line">dcc13b449c3a: Pull complete </div><div class="line">35c5563f57e6: Pull complete </div><div class="line">Digest: sha256:e4391c1ba05bf047a2153ea76691c4b1c66560e394d1d84354505cd9a0c30907</div><div class="line">Status: Downloaded newer image for sonatype/nexus:latest</div><div class="line">localhost:~ mac$</div></pre></td></tr></table></figure>
+<h4 id="4、在-Terminal-中输入docker-run-d-p-8081-8081-–name-jindan-sonatype-nexus-oss来创建一个名叫-jindan-的容器，占用端口8081。"><a href="#4、在-Terminal-中输入docker-run-d-p-8081-8081-–name-jindan-sonatype-nexus-oss来创建一个名叫-jindan-的容器，占用端口8081。" class="headerlink" title="4、在 Terminal 中输入docker run -d -p 8081:8081 –name jindan sonatype/nexus:oss来创建一个名叫 jindan 的容器，占用端口8081。"></a>4、在 Terminal 中输入docker run -d -p 8081:8081 –name jindan sonatype/nexus:oss来创建一个名叫 jindan 的容器，占用端口8081。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">localhost:~ mac$ docker run -d -p 8081:8081 --name jindan sonatype/nexus:oss</div><div class="line">a3516501e50747207d0b4503780f1fac1413c6abe3f1387c362b5c5213118a44</div><div class="line">localhost:~ mac$</div></pre></td></tr></table></figure>
+<h4 id="5、在-Terminal-中输入docker-ps-a查看容器"><a href="#5、在-Terminal-中输入docker-ps-a查看容器" class="headerlink" title="5、在 Terminal 中输入docker ps -a查看容器"></a>5、在 Terminal 中输入docker ps -a查看容器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker ps <span class="_">-a</span></div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">localhost:~ mac$ docker ps -a</div><div class="line">CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES</div><div class="line">a3516501e507        sonatype/nexus:oss   &quot;/bin/sh -c &apos;$&#123;JAV...&quot;   52 seconds ago      Up 51 seconds       0.0.0.0:8081-&gt;8081/tcp   jindan</div><div class="line">localhost:~ mac$</div></pre></td></tr></table></figure>
+<h4 id="6、浏览器里输入-http-localhost-8081-nexus-，如果显示一个Nexus-Repository-Manager-OSS网页界面，证明-Nexus-搭建成功。"><a href="#6、浏览器里输入-http-localhost-8081-nexus-，如果显示一个Nexus-Repository-Manager-OSS网页界面，证明-Nexus-搭建成功。" class="headerlink" title="6、浏览器里输入 http://localhost:8081/nexus/，如果显示一个Nexus Repository Manager OSS网页界面，证明 Nexus 搭建成功。"></a>6、浏览器里输入 <a href="http://localhost:8081/nexus/，如果显示一个Nexus" target="_blank" rel="external">http://localhost:8081/nexus/，如果显示一个Nexus</a> Repository Manager OSS网页界面，证明 Nexus 搭建成功。</h4><h4 id="7、一些常用指令：-参考"><a href="#7、一些常用指令：-参考" class="headerlink" title="7、一些常用指令： 参考"></a>7、一些常用指令： <a href="http://blog.csdn.net/wsscy2004/article/details/25878363" target="_blank" rel="external"><font color="#2196F3">参考</font></a></h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker start jindan         开始运行jindan容器 </div><div class="line">$ docker restart jindan       重新运行jindan容器 </div><div class="line">$ docker stop jindan          停止运行jindan容器 </div><div class="line">$ docker rm jindan            删除jindan容器</div></pre></td></tr></table></figure>
+<h2 id="附1：Nexus-使用"><a href="#附1：Nexus-使用" class="headerlink" title="附1：Nexus 使用"></a>附1：Nexus 使用</h2><h3 id="一、登录"><a href="#一、登录" class="headerlink" title="一、登录"></a>一、登录</h3><p>1、点击右上角login登录，默认账户admin，默认密码admin123；</p>
+<p>2、点击左侧栏目的Repositories，显示Nexus 默认已经有的仓库；</p>
+<h3 id="二、创建一个私有仓库"><a href="#二、创建一个私有仓库" class="headerlink" title="二、创建一个私有仓库"></a>二、创建一个私有仓库</h3><p>1、点击add，选择Hosted Repository</p>
+<p>2、在下方输入Repository ID和Repository Name，这里我分别输入的是demo和Demo，这里可以换成你自己的。</p>
+<p>3、部署策略Deployment Policy选择为Allow Redeploy允许重新部署。</p>
+<p>4、点击save保存，在上方列表中就会显示完成的仓库信息，最后一列Repository Path就是仓库的地址。</p>
+<p><a href="http://blog.csdn.net/liujiahan629629/article/details/39272321" target="_blank" rel="external"><font color="#2196F3">参考：Nexus配置和使用</font></a><br><a href="http://www.cnblogs.com/li3807/p/6416236.html" target="_blank" rel="external"><font color="#2196F3">Maven 私服 Nexus 权限控制</font></a></p>
+<h3 id="三、代理仓库"><a href="#三、代理仓库" class="headerlink" title="三、代理仓库"></a>三、代理仓库</h3><p>这里我是代理的 jcenter，因为这是 Android Studio 的默认仓库。</p>
+<p>1、点击add，选择Proxy Repository</p>
+<p>2、在下方输入Repository ID和Repository Name，这里我分别输入的是jcenter和Jcenter，因为代理的就是 jcenter 哈。</p>
+<p>3、在Remote Storage Location输入代理仓库的仓库地址 <a href="http://jcenter.bintray.com/。" target="_blank" rel="external">http://jcenter.bintray.com/。</a></p>
+<p>4、点击save保存，在上方列表中就会显示完成的仓库信息，最后一列Repository Path就是仓库的地址。</p>
+<p>建议：我在项目里也没有新创建一个仓库，而是直接用的默认 Release 和 Snapshot。</p>
+<h2 id="附2：Android-Studio-中上传-Library-Module-到私有-maven"><a href="#附2：Android-Studio-中上传-Library-Module-到私有-maven" class="headerlink" title="附2：Android Studio 中上传 Library Module 到私有 maven"></a>附2：Android Studio 中上传 Library Module 到私有 maven</h2><h3 id="一、上传到-Maven"><a href="#一、上传到-Maven" class="headerlink" title="一、上传到 Maven"></a>一、上传到 Maven</h3><p>1、因为，Module比较多，我在项目根目录里写了一个 gradle 文件gradle_mvn_push.gradle来上传。代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;maven&apos;</div><div class="line">//release 地址</div><div class="line">def RELEASE_REPOSITORY_URL = &quot;http://192.168.101.123:8081/nexus/content/repositories/releases/&quot;</div><div class="line">//snapshots 地址</div><div class="line">def SNAPSHOT_REPOSITORY_URL = &quot;http://192.168.101.123:8081/nexus/content/repositories/snapshots/&quot;</div><div class="line">//判断 VERSION_NAME 如果以`-SHAPSHOT`结尾,则上传地址为 snapshot 地址</div><div class="line">def REPOSITORY_URL = VERSION_NAME.endsWith(&quot;-SNAPSHOT&quot;) ? SNAPSHOT_REPOSITORY_URL : RELEASE_REPOSITORY_URL;</div><div class="line"></div><div class="line">def NEXUS_USERNAME = &quot;admin&quot;</div><div class="line"></div><div class="line">def NEXUS_PASSWORD = &quot;admin123&quot;</div><div class="line"></div><div class="line">logger.info(&quot;groupId = %s\t\nartifactId = %s\t\nversion = %s\t\nrepository = %s\t\n&quot;, GROUP, POM_ARTIFACT_ID, VERSION_NAME, REPOSITORY_URL)</div><div class="line"></div><div class="line">afterEvaluate &#123; project -&gt;</div><div class="line">    uploadArchives &#123;</div><div class="line">        repositories.mavenDeployer &#123;</div><div class="line">            pom.groupId = GROUP</div><div class="line">            pom.artifactId = POM_ARTIFACT_ID</div><div class="line">            pom.version = VERSION_NAME</div><div class="line">            repository(url: REPOSITORY_URL) &#123;</div><div class="line">                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    task androidSourcesJar(type: Jar) &#123;</div><div class="line">        classifier = &apos;sources&apos;</div><div class="line">        from android.sourceSets.main.java.sourceFiles</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    artifacts &#123;</div><div class="line">        archives androidSourcesJar</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、然后在你要上传 module 的build.gradle 文件引入。<br>如下是我们network Module 的 build.gradle：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;com.android.library&apos;</div><div class="line"></div><div class="line">android &#123;</div><div class="line">    compileSdkVersion rootProject.ext.android.compileSdkVersion</div><div class="line">    buildToolsVersion rootProject.ext.android.buildToolsVersion</div><div class="line"></div><div class="line">    defaultConfig &#123;</div><div class="line">        minSdkVersion rootProject.ext.android.minSdkVersion</div><div class="line">        targetSdkVersion rootProject.ext.android.targetSdkVersion</div><div class="line">        versionCode 1</div><div class="line">        versionName &quot;1.0&quot;</div><div class="line">    &#125;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled false</div><div class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    lintOptions &#123;</div><div class="line">        abortOnError false</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</div><div class="line">    testCompile &apos;junit:junit:4.12&apos;</div><div class="line">    // 网络请求框架</div><div class="line">    compile rootProject.ext.dependencies[&quot;retrofit&quot;]</div><div class="line">    compile project(&apos;:tools&apos;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">ext.GROUP=&quot;com.jindan&quot;</div><div class="line">ext.VERSION_NAME=&quot;1.1.0&quot;</div><div class="line">ext.POM_ARTIFACT_ID=&quot;network&quot;</div><div class="line"></div><div class="line">apply from: &quot;$&#123;project.rootDir&#125;/gradle_mvn_push.gradle&quot;</div></pre></td></tr></table></figure>
+<p>这里请关注下面的代码，GROUP，VERSION_NAME，POM_ARTIFACT_ID和最后一行引入我们前面写的gradle_mvn_push.gradle。</p>
+<p>GROUP            :  一般代表了你的组织名称，例如我的 com.jindan<br>POM_ARTIFACT_ID  :  Library 的简称。<br>VERSION_NAME     :  版本号，如果有-SNAPSHOT表示是快照版。</p>
+<p>上面这三个也就组成了我们平常看见的引依赖 com.jindan:network:1.1.0</p>
+<p>3、打开Android Studio的控制台，输入 ./gradlew -p network clean build uploadArchives</p>
+<p>network：当前module的名称</p>
+<p>等编译完成后可以登录Nexus页面可以发现你刚才上传的arr包了。</p>
+<h3 id="二、引用私有-Maven"><a href="#二、引用私有-Maven" class="headerlink" title="二、引用私有 Maven"></a>二、引用私有 Maven</h3><p><a href="http://www.jianshu.com/p/07d59ff637dc" target="_blank" rel="external">以下内容部分来源简书</a></p>
+<p>下面就直接上一段代码吧，这是项目根目录的build.gradle里面修改了 maven 仓库的地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">// Top-level build file where you can add configuration options common to all sub-projects/modules.</div><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    dependencies &#123;</div><div class="line">        classpath &apos;com.android.tools.build:gradle:2.1.3&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">allprojects &#123;</div><div class="line"></div><div class="line">    repositories &#123;</div><div class="line">//        jcenter()</div><div class="line">        // 私有 release 地址</div><div class="line">        maven&#123; url &quot;http://192.168.101.123:8081/nexus/content/repositories/releases/&quot; &#125;</div><div class="line">        // 私有 snapshot 地址</div><div class="line">        maven&#123; url &quot;http://192.168.101.123:8081/nexus/content/repositories/snapshots/&quot; &#125;</div><div class="line">        //jcenter 代理</div><div class="line">        maven&#123; url &quot;http://192.168.101.123:8081/nexus/content/repositories/jcenter/&quot; &#125;</div><div class="line">        // maven 代理</div><div class="line">        maven&#123; url &quot;http://192.168.101.123:8081/nexus/content/repositories/central/&quot; &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">task clean(type: Delete) &#123;</div><div class="line">    delete rootProject.buildDir</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在需要引用library的module的build.gradle文件中添加引用就行了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(include: [&apos;*.jar&apos;], dir: &apos;libs&apos;)</div><div class="line">    </div><div class="line">    // 自己上传到maven的library</div><div class="line">    compile &apos;com.jindan:network:1.1.0&apos;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意事项：上传相同版本号的library到maven会提示失败，可以登录nexus删除之前的library，或者修改本次上传的版本号。</p>
+<p>好的，到这里就算结束了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://github.com/larry99work/larry99work.github.io/2017/10/23/redex/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -344,12 +510,12 @@
       
         
           
-            <h3 id="Redex-简介"><a href="#Redex-简介" class="headerlink" title="Redex 简介"></a>Redex 简介</h3><p>最近 Facebook 开源了一个名为 Redex 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。</p>
+            <h3 id="Redex-简介"><a href="#Redex-简介" class="headerlink" title="Redex 简介"></a>Redex 简介</h3><p>最近 Facebook 开源了一个名为 Redex<a href="https://github.com/facebook/redex">1</a> 的工具包，专门用于 Android 字节码的优化，经过 Redex 转换后的 APK，体积变得更小，运行速度变得更快。Redex 基于管道的方式来优化 Android 的 .dex 文件，一个源 .dex 文件通过管道进行一系列的自定义转换后，将得到一个优化的 .dex 文件。</p>
 <h3 id="Redex-的集成和使用"><a href="#Redex-的集成和使用" class="headerlink" title="Redex 的集成和使用"></a>Redex 的集成和使用</h3><p>在使用 Redex 之前，首先要配置好编译环境，Redex 目前支持 Mac OSX 和 Linux 系统，Windows 同学请掩泪飘过～，下面以 Mac OSX 为例说明。</p>
 <h4 id="1、依赖的安装"><a href="#1、依赖的安装" class="headerlink" title="1、依赖的安装"></a>1、依赖的安装</h4><p>打开 Terminal 窗口，执行以下的 HomeBrew 命令安装 Redex 的依赖：</p>
 <pre><code>brew install autoconf automake libtool python3
 brew install boost double-conversion gflags glog libevent
-</code></pre><h4 id="2、下载，构建和安装"><a href="#2、下载，构建和安装" class="headerlink" title="2、下载，构建和安装"></a>2、下载，构建和安装</h4><p>Redex 的依赖成功安装后，接着使用 Git 将 Redex 的源码 checkout 到电脑上，由于 Redex 是以子模块的方式引入 folly[3] 的，因此需要执行如下命令初始化子模块：</p>
+</code></pre><h4 id="2、下载，构建和安装"><a href="#2、下载，构建和安装" class="headerlink" title="2、下载，构建和安装"></a>2、下载，构建和安装</h4><p>Redex 的依赖成功安装后，接着使用 Git 将 Redex 的源码 checkout 到电脑上，由于 Redex 是以子模块的方式引入 folly<a href="https://github.com/facebook/folly">3</a> 的，因此需要执行如下命令初始化子模块：</p>
 <pre><code>git submodule update --init
 </code></pre><p>最后，通过 autoreconf 和 make 命令来编译 Redex：</p>
 <pre><code>autoreconf -ivf &amp;&amp; ./configure &amp;&amp; make &amp;&amp; make install
@@ -860,7 +1026,7 @@ brew install boost double-conversion gflags glog libevent
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
